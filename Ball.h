@@ -26,7 +26,7 @@ public:
 
     void reboundBats();
 
-    void ballPassEdge(int x, int y);
+    void reset(int x, int y);
 
     void start();
 

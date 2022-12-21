@@ -5,10 +5,11 @@
 #include "Bat.h"
 
 Bat::Bat(float x, float y) {
-    batPos.x = x;
-    batPos.y = y;
-
     bat.setSize(sf::Vector2f(10, 50));
+
+    batPos.x = x;
+    batPos.y = y - bat.getGlobalBounds().height/2;
+
     bat.setPosition(batPos);
 }
 

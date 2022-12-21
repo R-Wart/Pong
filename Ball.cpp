@@ -5,10 +5,11 @@
 #include "Ball.h"
 
 Ball::Ball(float x, float y) {
-    ballPos.x = x;
-    ballPos.y = y;
-
     ball.setSize(sf::Vector2f(10, 10));
+
+    ballPos.x = x - ball.getGlobalBounds().width/2;
+    ballPos.y = y - ball.getGlobalBounds().height/2;
+
     ball.setPosition(ballPos);
 }
 
@@ -28,12 +29,12 @@ void Ball::reboundBats() {
     xVelocity *= -1;
 }
 
-void Ball::ballPassEdge(int x, int y) {
+void Ball::reset(int x, int y) {
     xVelocity = 0;
     yVelocity = 0;
 
-    ballPos.x = x;
-    ballPos.y = y;
+    ballPos.x = x - ball.getGlobalBounds().width/2;
+    ballPos.y = y - ball.getGlobalBounds().height/2;
 }
 
 void Ball::start() {

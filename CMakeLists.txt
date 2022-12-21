@@ -11,3 +11,9 @@ set(SFML_DIR C:/msys64/mingw64/lib/cmake/SFML)
 find_package(SFML COMPONENTS system window graphics audio REQUIRED)
 
 target_link_libraries(Pong sfml-system sfml-window sfml-graphics sfml-audio)
+
+add_custom_target(copy_resources
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
+        )
+
+add_dependencies(Pong copy_resources)
