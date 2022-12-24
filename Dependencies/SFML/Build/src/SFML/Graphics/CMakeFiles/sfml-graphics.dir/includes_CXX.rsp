@@ -1,0 +1,1 @@
+-I"E:/Libraries/Downloads/SFML/SFML-2.6.x/include" -I"E:/Libraries/Downloads/SFML/SFML-2.6.x/src" -isystem "E:/Libraries/Downloads/SFML/SFML-2.6.x/extlibs/headers/stb_image" -isystem "E:/Libraries/Downloads/SFML/SFML-2.6.x/extlibs/headers/glad/include" -isystem "E:/Libraries/Downloads/SFML/SFML-2.6.x/extlibs/headers/freetype2" -isystem C:/msys64/mingw64/include/freetype2

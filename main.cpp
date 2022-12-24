@@ -6,16 +6,7 @@ int windowWidth = 640;
 
 int windowHeight = 480;
 
-void setup(sf::RenderWindow &window){
-    sf::RectangleShape line;
-    line.setSize(sf::Vector2f(5, 30));
-    for(int y = 15; y < 480; y += line.getGlobalBounds().height + 30){
-        line.setPosition(windowWidth/2 - line.getGlobalBounds().width/2, y);
-        window.draw(line);
-    }
-}
-
-void userInput(Ball &ball, Bat &p1, Bat &p2, bool &started, bool &running) {
+void userInput(Ball &ball, Bat &p1, Bat &p2, bool &started, bool &running, int &p1Score, int &p2Score) {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !running){
         ball.start();
         running = true;
@@ -26,6 +17,8 @@ void userInput(Ball &ball, Bat &p1, Bat &p2, bool &started, bool &running) {
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::R)){
         ball.reset(windowWidth/2, windowHeight/2);
+        p1Score = 0;
+        p2Score = 0;
         running = false;
         started = false;
     }
@@ -51,7 +44,7 @@ void userInput(Ball &ball, Bat &p1, Bat &p2, bool &started, bool &running) {
     p2.update();
 }
 
-void collision(Ball &ball, Bat &p1, Bat &p2, bool &running, sf::Text &player1Score, int &p1Score, sf::Text &player2Score, int &p2Score){
+void collision(Ball &ball, Bat &p1, Bat &p2, bool &running, int &p1Score, int &p2Score){
     if(ball.getBounds().top <= 0 || ball.getBounds().top + ball.getBounds().height >= windowHeight){
         ball.reboundSides();
     }
@@ -62,7 +55,6 @@ void collision(Ball &ball, Bat &p1, Bat &p2, bool &running, sf::Text &player1Sco
 
     if(ball.getBounds().left <= 0 ) {
         p2Score += 1;
-        player2Score.setString(std::to_string(p2Score));
 
         ball.reset(windowWidth/2, windowHeight/2);
         running = false;
@@ -70,7 +62,6 @@ void collision(Ball &ball, Bat &p1, Bat &p2, bool &running, sf::Text &player1Sco
 
     if(ball.getBounds().left + ball.getBounds().width >= windowWidth){
         p1Score += 1;
-        player1Score.setString(std::to_string(p1Score));
 
         ball.reset(windowWidth/2, windowHeight/2);
         running = false;
@@ -79,10 +70,25 @@ void collision(Ball &ball, Bat &p1, Bat &p2, bool &running, sf::Text &player1Sco
     ball.update();
 }
 
-void draw(sf::RenderWindow &window, sf::Text p1Score, sf::Text p2Score,Bat p1, Bat p2, Ball ball){
-    window.draw(p1Score);
+void setupBoard(sf::RenderWindow &window){
+    sf::RectangleShape line;
+    line.setSize(sf::Vector2f(5, 30));
+    for(int y = 15; y < 480; y += line.getGlobalBounds().height + 30){
+        line.setPosition(windowWidth/2 - line.getGlobalBounds().width/2, y);
+        window.draw(line);
+    }
+}
 
-    window.draw(p2Score);
+void draw(sf::RenderWindow &window, sf::Text &player1Score, int &p1Score, sf::Text &player2Score, int &p2Score, Bat p1, Bat p2, Ball ball){
+    window.clear();
+
+    setupBoard(window);
+
+    player1Score.setString(std::to_string(p1Score));
+    window.draw(player1Score);
+
+    player2Score.setString(std::to_string(p2Score));
+    window.draw(player2Score);
 
     window.draw(p1.getShape());
 
@@ -137,14 +143,10 @@ int main() {
             }
         }
 
-        window.clear();
+        userInput(ball, player1, player2, gameStarted,gameRunning, p1Score, p2Score);
 
-        setup(window);
+        collision(ball, player1, player2, gameRunning, p1Score, p2Score);
 
-        userInput(ball, player1, player2, gameStarted,gameRunning);
-
-        collision(ball, player1, player2, gameRunning, player1Score, p1Score, player2Score, p2Score);
-
-        draw(window, player1Score, player2Score, player1, player2, ball);
+        draw(window, player1Score, p1Score, player2Score, p2Score, player1, player2, ball);
     }
 }

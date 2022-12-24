@@ -1,0 +1,1 @@
+-I"E:/Libraries/Downloads/SFML/SFML-2.6.x/include" -I"E:/Libraries/Downloads/SFML/SFML-2.6.x/src" -isystem "E:/Libraries/Downloads/SFML/SFML-2.6.x/extlibs/headers/minimp3" -isystem "E:/Libraries/Downloads/SFML/SFML-2.6.x/extlibs/headers/AL" -isystem "E:/Libraries/Downloads/SFML/SFML-2.6.x/extlibs/headers"
